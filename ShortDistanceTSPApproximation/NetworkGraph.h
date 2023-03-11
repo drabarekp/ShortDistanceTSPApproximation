@@ -1,13 +1,15 @@
 #pragma once
-
+#include "Graph.h"
 #include <vector>
 
-class NetworkGraph {
-	typedef std::vector<std::vector<double>> CostMatrix;
+typedef std::vector<std::vector<double>> CostMatrix;
 
+class NetworkGraph: Graph {
+private:
 	CostMatrix costs;
 
 public:
-	NetworkGraph(CostMatrix cost_matrix);
+	NetworkGraph(CostMatrix &cost_matrix);
 
+	double GetCost(int i, int j) const;
 };

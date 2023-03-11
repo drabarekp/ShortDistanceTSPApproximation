@@ -131,6 +131,8 @@
     <ClCompile Include="ShortDistanceTSPApproximation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphGenerator.h" />
     <ClInclude Include="NetworkGraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

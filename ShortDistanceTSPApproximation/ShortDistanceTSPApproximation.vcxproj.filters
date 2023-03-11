@@ -26,5 +26,11 @@
     <ClInclude Include="NetworkGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GraphGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

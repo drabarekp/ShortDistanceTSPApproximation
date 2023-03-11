@@ -2,10 +2,15 @@
 //
 
 #include <iostream>
+#include "Graph.h"
+#include "NetworkGraph.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    CostMatrix costs = { {0.4, 0.3, 2.1}, {0.6, 1.2, 1.5}, {0.8, 1.1, 1.9} };
+    NetworkGraph g(costs);
+
+    std::cout << g.GetCost(1, 1) << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
