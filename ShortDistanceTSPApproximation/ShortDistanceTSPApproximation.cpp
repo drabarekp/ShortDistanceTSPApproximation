@@ -8,7 +8,8 @@
 int main()
 {
     CostMatrix costs = { {0.4, 0.3, 2.1}, {0.6, 1.2, 1.5}, {0.8, 1.1, 1.9} };
-    NetworkGraph g(costs);
+    NetworkGraph ng(costs);
+    Graph& g = ng;
 
     std::cout << g.GetCost(1, 1) << std::endl;
 }
