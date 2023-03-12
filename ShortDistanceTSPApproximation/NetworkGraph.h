@@ -4,7 +4,7 @@
 
 typedef std::vector<std::vector<double>> CostMatrix;
 
-class NetworkGraph: Graph {
+class NetworkGraph: public Graph {
 private:
 	CostMatrix costs;
 
