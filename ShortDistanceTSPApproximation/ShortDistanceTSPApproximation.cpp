@@ -11,7 +11,7 @@ int main()
     NetworkGraph ng(costs);
     Graph& g = ng;
 
-    std::cout << g.GetCost(1, 1) << std::endl;
+    std::cout << g.getCost(1, 1) << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

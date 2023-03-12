@@ -127,13 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GraphAlgorithm.cpp" />
     <ClCompile Include="NetworkGraph.cpp" />
     <ClCompile Include="ShortDistanceTSPApproximation.cpp" />
+    <ClCompile Include="SparseGraph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphAlgorithm.h" />
     <ClInclude Include="GraphGenerator.h" />
     <ClInclude Include="NetworkGraph.h" />
+    <ClInclude Include="SparseGraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

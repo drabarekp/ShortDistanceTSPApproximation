@@ -13,6 +13,23 @@ NetworkGraph::NetworkGraph(CostMatrix &cost_matrix)
 	this->costs = cost_matrix;
 }
 
-double NetworkGraph::GetCost(int i, int j) const {
+double NetworkGraph::getCost(int i, int j) const {
 	return costs[i][j];
+}
+
+int NetworkGraph::verticesCount() const{
+	return costs.size();
+}
+
+int NetworkGraph::edgesCount() const{
+
+	int count = 0;
+
+	for (int i = 0; i < verticesCount(); i++) {
+		for (int j = 0; j < verticesCount(); j++) {
+			if (getCost(i, j) != NO_EDGE) count++;
+		}
+	}
+
+	return count / 2;
 }
