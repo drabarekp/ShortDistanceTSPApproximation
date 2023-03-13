@@ -3,15 +3,22 @@
 
 #include <iostream>
 #include "Graph.h"
-#include "NetworkGraph.h"
+#include "SparseGraph.h"
+#include "GraphAlgorithm.h"
 
 int main()
 {
-    CostMatrix costs = { {0.4, 0.3, 2.1}, {0.6, 1.2, 1.5}, {0.8, 1.1, 1.9} };
-    NetworkGraph ng(costs);
-    Graph& g = ng;
+    std::vector<std::vector<double>> costs = { {0, 0.3, 2.1}, {0, 0, 1.5}, {0, 0, 0} };
+    GraphAlgorithm alg;
+    SparseGraph sg(costs);
 
-    std::cout << g.getCost(1, 1) << std::endl;
+
+    auto tree = alg.kruskalMinimalSpanningTree(sg);
+
+    for (auto e : tree)
+        std::cout << e.toString() << "\n";
+    
+    std::cout << sg.edgesCount();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
