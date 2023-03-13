@@ -131,6 +131,7 @@
     <ClCompile Include="NetworkGraph.cpp" />
     <ClCompile Include="ShortDistanceTSPApproximation.cpp" />
     <ClCompile Include="SparseGraph.cpp" />
+    <ClCompile Include="UnionFind.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graph.h" />

@@ -1,11 +1,17 @@
 #include "SparseGraph.h"
 #include <algorithm>
 
+
 SparseGraph::SparseGraph(std::vector<std::vector<double>> cost_matrix) {
-	
-	for (int i = 0; i < verticesCount(); i++) {
-		for (int j = 0; j < verticesCount(); j++) {
-			costs[i].emplace(j, cost_matrix[i][j]);
+
+	int costMatrixSize = cost_matrix.size();
+
+	this->costs.resize(costMatrixSize);
+
+	for (int i = 0; i < costMatrixSize; i++) {
+		for (int j = 0; j < costMatrixSize; j++) {
+			if(i < j)
+				costs[i].emplace(j, cost_matrix[i][j]);
 		}
 	}
 }
@@ -30,8 +36,11 @@ SparseGraph::SparseGraph(std::map<std::pair<int, int>, double> edges) {
 	std::vector<std::map<int, double>> costs;
 
 	while (it != edges.end()) {
-		costs[it->first.first][it->first.second] = it->second;
-		costs[it->first.second][it->first.first] = it->second;
+		if(it->first.first < it->first.second)
+			costs[it->first.first][it->first.second] = it->second;
+		else
+			costs[it->first.second][it->first.first] = it->second;
+		++it;
 	}
 }
 
@@ -45,14 +54,13 @@ int SparseGraph::verticesCount() const {
 }
 
 int SparseGraph::edgesCount() const {
-
 	int count = 0;
 
 	for (int i = 0; i < verticesCount(); i++) {
 		count += costs[i].size();
 	}
 
-	return count / 2;
+	return count;
 }
 
 void SparseGraph::getEdgesBelowAndAboveMedian(std::map<std::pair<int, int>, double>& below, std::map<std::pair<int, int>, double>& above) {
@@ -67,9 +75,23 @@ double SparseGraph::findMedianCost() {
 		auto it = this->costs[i].begin();
 		while (it != costs[i].end()){
 			costs_vector.push_back(it->second);
+			++it;
 		}
 	}
 
 	std::sort(costs_vector.begin(), costs_vector.end());
 	return costs_vector[costs_vector.size() / 2];
+}
+
+std::vector<GraphEdge> SparseGraph::getEdges(){
+	std::vector<GraphEdge> edges;
+	for (int i = 0; i < verticesCount(); i++) {
+		auto it = costs[i].begin();
+		while (it != costs[i].end()) {
+			edges.push_back(GraphEdge(i, it->first, it->second));
+			++it;
+		}
+	}
+
+	return edges;
 }
