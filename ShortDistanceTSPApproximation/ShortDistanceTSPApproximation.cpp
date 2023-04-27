@@ -5,9 +5,11 @@
 #include "Graph.h"
 #include "SparseGraph.h"
 #include "GraphAlgorithm.h"
+#include "InstancesReader.h"
 
 int main()
 {
+
     std::vector<std::vector<double>> costs = { {0, 0.3, 2.1}, {0, 0, 1.5}, {0, 0, 0} };
     GraphAlgorithm alg;
     SparseGraph sg(costs);
