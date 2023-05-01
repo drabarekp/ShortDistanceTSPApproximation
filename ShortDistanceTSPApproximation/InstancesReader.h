@@ -12,7 +12,8 @@ class InstancesReader {
 		InstanceFileParser* parser;
 	public:
 		InstancesReader() {
-			parser = (new MatrixFileParser())->SetNext(new NodeCoordFileParser());
+			parser = new MatrixFileParser();
+			parser->SetNext(new LowerDiagonalMatrixFileParser())->SetNext(new NodeCoordFileParser());
 		}
 
 		std::vector<TestInstance*> Read() {
@@ -24,8 +25,11 @@ class InstancesReader {
 
 				TestInstance* instance = this->parser->ParseFile(path);
 				if (instance)
+				{
 					instances.push_back(instance);
+				}
 			}
+			
 
 			std::cout << "Parsed succesfully " << instances.size() << " files\n";
 
