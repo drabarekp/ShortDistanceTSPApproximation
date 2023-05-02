@@ -30,6 +30,9 @@
     <ClCompile Include="UnionFind.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NetworkGraph.h">
@@ -45,6 +48,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SparseGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceFileParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancesReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{513d05a0-639c-47be-9de0-921ca478d838}</ProjectGuid>
-    <RootNamespace>ShortDistanceTSPApproximation</RootNamespace>
+    <ProjectGuid>{2f9f9663-9845-498d-86c9-7529aa7dfe3c}</ProjectGuid>
+    <RootNamespace>InstancesGenerator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -128,22 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GraphAlgorithm.cpp" />
-    <ClCompile Include="NetworkGraph.cpp" />
-    <ClCompile Include="ShortDistanceTSPApproximation.cpp" />
-    <ClCompile Include="SparseGraph.cpp" />
-    <ClCompile Include="TestInstance.cpp" />
-    <ClCompile Include="UnionFind.h" />
+    <ClCompile Include="InstancesGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Graph.h" />
-    <ClInclude Include="GraphAlgorithm.h" />
-    <ClInclude Include="GraphGenerator.h" />
-    <ClInclude Include="InstanceFileParser.h" />
-    <ClInclude Include="InstancesReader.h" />
-    <ClInclude Include="NetworkGraph.h" />
-    <ClInclude Include="SparseGraph.h" />
-    <ClInclude Include="TestInstance.h" />
+    <ClInclude Include="RandomInstanceGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

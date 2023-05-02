@@ -1,28 +1,14 @@
-// ShortDistanceTSPApproximation.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// InstancesGenerator.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
-#include "Graph.h"
-#include "SparseGraph.h"
-#include "GraphAlgorithm.h"
-#include "InstancesReader.h"
+#include "RandomInstanceGenerator.h"
 
 int main()
 {
-    InstancesReader reader;
-    reader.Read();
+    RandomInstanceGenerator* generator = new RandomInstanceGenerator("../generated_instances");
 
-    std::vector<std::vector<double>> costs = { {0, 0.3, 2.1}, {0, 0, 1.5}, {0, 0, 0} };
-    GraphAlgorithm alg;
-    SparseGraph sg(costs);
-
-
-    auto tree = alg.kruskalMinimalSpanningTree(sg);
-
-    for (auto e : tree)
-        std::cout << e.toString() << "\n";
-    
-    std::cout << sg.edgesCount();
+    generator->Generate(5, 2);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
