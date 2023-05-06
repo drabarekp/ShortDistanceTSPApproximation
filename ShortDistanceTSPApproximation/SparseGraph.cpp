@@ -10,8 +10,8 @@ SparseGraph::SparseGraph(std::vector<std::vector<double>> cost_matrix) {
 
 	for (int i = 0; i < costMatrixSize; i++) {
 		for (int j = 0; j < costMatrixSize; j++) {
-			if(i < j)
-				costs[i].emplace(j, cost_matrix[i][j]);
+			//if(i < j)
+			costs[i].emplace(j, cost_matrix[i][j]);
 		}
 	}
 }
@@ -36,12 +36,29 @@ SparseGraph::SparseGraph(std::map<std::pair<int, int>, double> edges) {
 	std::vector<std::map<int, double>> costs;
 
 	while (it != edges.end()) {
-		if(it->first.first < it->first.second)
-			costs[it->first.first][it->first.second] = it->second;
-		else
-			costs[it->first.second][it->first.first] = it->second;
+		//if(it->first.first < it->first.second)
+		costs[it->first.first][it->first.second] = it->second;
+		//else
+		costs[it->first.second][it->first.first] = it->second;
 		++it;
 	}
+
+	this->costs = costs;
+}
+
+SparseGraph::SparseGraph(std::vector<GraphEdge> edges) {
+	auto it = edges.begin();
+	std::vector<std::map<int, double>> costs;
+
+	while (it != edges.end()) {
+		//if (it->source < it->dest)
+		costs[it->source][it->dest] = it->cost;
+		//else
+		costs[it->dest][it->source] = it->cost;
+		++it;
+	}
+
+	this->costs = costs;
 }
 
 double SparseGraph::getCost(int i, int j) const {
@@ -61,6 +78,17 @@ int SparseGraph::edgesCount() const {
 	}
 
 	return count;
+}
+
+std::vector<int> SparseGraph::getNeighbours(int from) {
+	auto it = costs[from].begin();
+	std::vector<int> neighbours;
+
+	while (it != costs[from].end()) {
+		neighbours.push_back(it->first);
+		++it;
+	}
+	return neighbours;
 }
 
 void SparseGraph::getEdgesBelowAndAboveMedian(std::map<std::pair<int, int>, double>& below, std::map<std::pair<int, int>, double>& above) {
