@@ -133,6 +133,7 @@
     <ClCompile Include="ShortDistanceTSPApproximation.cpp" />
     <ClCompile Include="SparseGraph.cpp" />
     <ClCompile Include="TestInstance.cpp" />
+    <ClCompile Include="TestsRunner.cpp" />
     <ClCompile Include="UnionFind.h" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,7 @@
     <ClInclude Include="NetworkGraph.h" />
     <ClInclude Include="SparseGraph.h" />
     <ClInclude Include="TestInstance.h" />
+    <ClInclude Include="TestsRunner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

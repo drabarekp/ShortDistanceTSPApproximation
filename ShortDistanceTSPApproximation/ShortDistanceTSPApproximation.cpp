@@ -6,23 +6,19 @@
 #include "SparseGraph.h"
 #include "GraphAlgorithm.h"
 #include "InstancesReader.h"
+#include "TestsRunner.h"
 
 int main()
 {
     InstancesReader reader;
-    reader.Read();
+    auto instances = reader.Read();
 
-    std::vector<std::vector<double>> costs = { {0, 0.3, 2.1}, {0, 0, 1.5}, {0, 0, 0} };
-    GraphAlgorithm alg;
-    SparseGraph sg(costs);
+    GraphAlgorithm algorithm;
+
+    TestsRunner runner(instances, algorithm);
+    runner.RunTests();
 
 
-    auto tree = alg.kruskalMinimalSpanningTree(sg);
-
-    for (auto e : tree)
-        std::cout << e.toString() << "\n";
-    
-    std::cout << sg.edgesCount();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

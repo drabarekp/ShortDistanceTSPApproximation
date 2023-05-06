@@ -2,6 +2,7 @@
 #include "UnionFind.h"
 #include <algorithm>
 #include <numeric>
+#include <iostream>
 
 bool lesserEdge(GraphEdge e1, GraphEdge e2) {
 	return e1.cost < e2.cost;
@@ -37,10 +38,16 @@ SparseGraph GraphAlgorithm::kruskalMinimalSpanningTree(SparseGraph& g){
 	return SparseGraph(minimalSpanningTree);
 }
 
-std::vector<int>& GraphAlgorithm::findBottleneckTSPApproximation(SparseGraph& tree) {
+std::vector<int> GraphAlgorithm::findBottleneckTSPApproximation(SparseGraph& tree) {
+	/*
 	auto visited = std::vector<bool>(tree.verticesCount());
 	auto cycle = std::vector<int>();
-	auto hamiltonCycle = recursiveBottleneckTSPApproximation(tree, 0, visited, cycle);
+	auto hamiltonCycle = recursiveBottleneckTSPApproximation(tree, 0, visited, cycle);*/
+
+	auto hamiltonCycle = std::vector<int>();
+	for (int i = 0;i < tree.verticesCount();i++) {
+		hamiltonCycle.push_back(i);
+	}
 	return hamiltonCycle;
 }
 

@@ -11,7 +11,7 @@ public:
 	void findBottleneckSpanningTree(Graph& g);
 	SparseGraph kruskalMinimalSpanningTree(SparseGraph& g);
 	void recusivelyFindBottleneckSpanningTree(Graph& g);
-	std::vector<int>& findBottleneckTSPApproximation(SparseGraph& tree);
+	std::vector<int> findBottleneckTSPApproximation(SparseGraph& tree);
 
 
 private:
