@@ -1,7 +1,7 @@
 #include "TestsRunner.h"
 #include <iostream>
 #include <fstream>
-
+#include <filesystem>
 
 TestsRunner::TestsRunner(std::vector<TestInstance*> instances, GraphAlgorithm algorithm){
 	this->instances = instances;
@@ -31,6 +31,10 @@ double TestsRunner::FindCycleWeight(std::vector<int> cycle, TestInstance* instan
 }
 
 void TestsRunner::SaveToFile(std::vector<int> cycle, double weight, TestInstance* instance){
+
+	if (!std::filesystem::exists(output_dir)) {
+		std::filesystem::create_directory(output_dir);
+	}
 
 	std::string path = output_dir + instance->filename;
 	std::ofstream file(path);
