@@ -95,8 +95,10 @@ class MatrixFileParser : public InstanceFileParser {
 			if (cost_matrix[i].size() != firstSize)
 				return InstanceFileParser::ParseFile(path);
 		}
+
+		std::string filename = path.substr(path.find_last_of("/\\") + 1);
 		
-		return new TestInstance(new SparseGraph(cost_matrix), name, optimal);
+		return new TestInstance(new SparseGraph(cost_matrix), name, filename, optimal);
 	}
 };
 
@@ -166,7 +168,9 @@ class LowerDiagonalMatrixFileParser : public InstanceFileParser {
 			}
 		}
 
-		return new TestInstance(new SparseGraph(cost_matrix), name, optimal);
+		std::string filename = path.substr(path.find_last_of("/\\") + 1);
+
+		return new TestInstance(new SparseGraph(cost_matrix), name, filename, optimal);
 	}
 };
 
@@ -246,9 +250,11 @@ class NodeCoordFileParser : public InstanceFileParser {
 
 		std::vector<std::vector<double>> cost_matrix = MakeCostMatrix(coords, dimension);
 		
-		delete[] coords;
+		delete coords;
 
-		return new TestInstance(new SparseGraph(cost_matrix),name, -1);
+		std::string filename = path.substr(path.find_last_of("/\\") + 1);
+
+		return new TestInstance(new SparseGraph(cost_matrix),name, filename, -1);
 	}
 
 	private:
