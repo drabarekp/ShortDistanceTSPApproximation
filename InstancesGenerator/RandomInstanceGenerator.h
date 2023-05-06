@@ -22,7 +22,6 @@ public:
 		for (int i = 0;i < instancesNumber;i++) {
 			std::string name = "rand-" + std::to_string(graphSize) + "(" + std::to_string(i) + ")";
 			std::string path = "..\\generated_instances\\" + name + ".txt";
-			std::cout << path;
 			std::ofstream file(path);
 
 			file << "NAME: " << name << std::endl;
