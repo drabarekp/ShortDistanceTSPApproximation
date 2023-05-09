@@ -35,11 +35,19 @@ std::vector<int> GraphAlgorithm::findBottleneckTSPApproximation(SparseGraph& net
 
 	auto tree = kruskalMinimalSpanningTree(network);
 	auto visited = std::vector<bool>(tree.verticesCount());
-	auto cycle = std::vector<int>();
 
-	recursiveBottleneckTSPApproximation(tree, 0, visited, cycle);
+	int initialVertex = 0;
+	for (int i = 0; i < tree.verticesCount(); i++) {
+		if (tree.getNeighbours(i).size() > 1) {
+			initialVertex = i;
+			break;
+		}
+	}
 
-	return cycle;
+	auto x = recursiveBottleneckTSPApproximation(tree, initialVertex, visited);
+
+	std::vector<int> result(x.begin(), x.end());
+	return result;
 }
 
 TreeSize GraphAlgorithm::getTreeSize(SparseGraph& tree, int root, std::vector<bool>& visited) {
@@ -80,35 +88,42 @@ TreeSize GraphAlgorithm::getTreeSize(SparseGraph& tree, int root, std::vector<bo
 	}
 }
 
-void GraphAlgorithm::recursiveBottleneckTSPApproximation(SparseGraph& tree, int root, std::vector<bool>& visited, std::vector<int>& cycle) {
+std::list<int> GraphAlgorithm::recursiveBottleneckTSPApproximation(SparseGraph& tree, int root, std::vector<bool>& visited) {
 	auto treeSize = getTreeSize(tree, root, visited);
 	visited[root] = true;
-	//std::vector<int> resultPath;
+	std::list<int> path;
 
 	if (treeSize == one) {
-		cycle.push_back(root);
-		/*return resultPath; */
+		path.push_back(root);
+		return path;
+		
 	}
 	else if (treeSize == two) {
-		cycle.push_back(root);
+		path.push_back(root);
 		auto neighbours = tree.getNeighbours(root);
 		for (auto neighbour : neighbours) {
 			if (!visited[neighbour]) {
-				cycle.push_back(neighbour);
+				path.push_back(neighbour);
 				visited[neighbour] = true;
-				break;
+				return path;
+			}
+		}
+	}
+	else if (treeSize == threeOrMore) {
+		/*cycle.push_back(root);*/
+		auto neighbours = tree.getNeighbours(root);
+		for (auto neighbour : neighbours) {
+			if (!visited[neighbour]) {
+				path.splice(path.end(), recursiveBottleneckTSPApproximation(tree, neighbour, visited));
 			}
 		}
 
-		//return resultPath;
-	}
-	else if (treeSize == threeOrMore) {
-		cycle.push_back(root);
-		auto neighbours = tree.getNeighbours(root);
-		for (auto neighbour : neighbours) {
-			if (!visited[neighbour]) {
-				recursiveBottleneckTSPApproximation(tree, neighbour, visited, cycle);
-			}
+		if (tree.getCost(root, path.front()) >= 0) {
+			path.push_back(root);
 		}
+		else {
+			path.push_front(root);
+		}
+		return path;
 	}
 }

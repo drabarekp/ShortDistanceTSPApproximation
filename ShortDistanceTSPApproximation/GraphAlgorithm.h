@@ -2,6 +2,7 @@
 
 #include "Graph.h"
 #include "SparseGraph.h"
+#include <list>
 
 enum TreeSize { one, two, threeOrMore };
 
@@ -14,6 +15,6 @@ public:
 
 private:
 	SparseGraph kruskalMinimalSpanningTree(SparseGraph& g);
-	void recursiveBottleneckTSPApproximation(SparseGraph& tree, int root, std::vector<bool>& visited, std::vector<int>& cycle);
+	std::list<int> recursiveBottleneckTSPApproximation(SparseGraph& tree, int root, std::vector<bool>& visited);
 	TreeSize getTreeSize(SparseGraph& tree, int root, std::vector<bool>& visited);
 };

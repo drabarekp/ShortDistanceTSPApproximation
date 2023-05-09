@@ -67,8 +67,10 @@ SparseGraph::SparseGraph(std::vector<GraphEdge> edges) {
 }
 
 double SparseGraph::getCost(int i, int j) const {
-
-	return costs[i].find(j) -> second;
+	auto it = costs[i].find(j);
+	if (it == costs[i].end())
+		return -1;
+	return it -> second;
 }
 
 int SparseGraph::verticesCount() const {
