@@ -14,18 +14,27 @@ void TestsRunner::RunTests() {
 
 		double weight = FindCycleWeight(result, instance);
 
+		std::cout << "Solution for file " << instance->filename << " is " << weight;
+		if (instance->optimalSolutionWeight != -1) {
+			std::cout << ", optimal is " << instance->optimalSolutionWeight << ", error is "<< 100*weight/ instance->optimalSolutionWeight << "%" << std::endl;
+		}
+		else {
+			std::cout << std::endl;
+		}
+
 		SaveToFile(result, weight, instance);
 	}
 }
 
 double TestsRunner::FindCycleWeight(std::vector<int> cycle, TestInstance* instance)
 {
-	double weight = 0.0;
+	double weight = -1;
 
-	for (int to = 1; to < cycle.size(); to++){
-		weight += instance->graph->getCost(cycle[to-1], to);
+	for (int to = 1; to <= cycle.size(); to++){
+		double cost = instance->graph->getCost(cycle[to-1], cycle[to%cycle.size()]);
+		if (cost > weight)
+			weight = cost;
 	}
-	weight += instance->graph->getCost(cycle[cycle.size() - 1], cycle[0]);
 
 	return weight;
 }
