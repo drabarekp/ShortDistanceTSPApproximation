@@ -14,9 +14,6 @@ int main()
 
 
     auto tree = alg.kruskalMinimalSpanningTree(sg);
-
-    for (auto e : tree)
-        std::cout << e.toString() << "\n";
     
     std::cout << sg.edgesCount();
 }
