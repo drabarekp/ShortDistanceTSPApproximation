@@ -31,34 +31,39 @@ SparseGraph::SparseGraph(std::vector<std::map<int, double>> costs) {
 	}
 }
 
-SparseGraph::SparseGraph(std::map<std::pair<int, int>, double> edges) {
+/*SparseGraph::SparseGraph(std::map<std::pair<int, int>, double> edges) {
+
+	this->costs = std::vector<std::map<int, double>>(costs.size());
 	auto it = edges.begin();
-	std::vector<std::map<int, double>> costs;
 
 	while (it != edges.end()) {
 		//if(it->first.first < it->first.second)
-		costs[it->first.first][it->first.second] = it->second;
+		this->costs[it->first.first][it->first.second] = it->second;
 		//else
-		costs[it->first.second][it->first.first] = it->second;
+		this->costs[it->first.second][it->first.first] = it->second;
 		++it;
 	}
 
-	this->costs = costs;
-}
+}*/
 
 SparseGraph::SparseGraph(std::vector<GraphEdge> edges) {
+	int maxVertexIndex = 0;
+	for (auto edge : edges) {
+		if (edge.dest > maxVertexIndex) maxVertexIndex = edge.dest;
+		if (edge.source > maxVertexIndex) maxVertexIndex = edge.source;
+	}
+
+	this->costs = std::vector<std::map<int, double>>(maxVertexIndex + 1);
 	auto it = edges.begin();
 	std::vector<std::map<int, double>> costs;
 
 	while (it != edges.end()) {
 		//if (it->source < it->dest)
-		costs[it->source][it->dest] = it->cost;
+		this->costs[it->source][it->dest] = it->cost;
 		//else
-		costs[it->dest][it->source] = it->cost;
+		this->costs[it->dest][it->source] = it->cost;
 		++it;
 	}
-
-	this->costs = costs;
 }
 
 double SparseGraph::getCost(int i, int j) const {

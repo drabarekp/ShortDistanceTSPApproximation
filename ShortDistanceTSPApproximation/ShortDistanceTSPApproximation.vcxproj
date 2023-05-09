@@ -139,7 +139,6 @@
   <ItemGroup>
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphAlgorithm.h" />
-    <ClInclude Include="GraphGenerator.h" />
     <ClInclude Include="InstanceFileParser.h" />
     <ClInclude Include="InstancesReader.h" />
     <ClInclude Include="NetworkGraph.h" />
