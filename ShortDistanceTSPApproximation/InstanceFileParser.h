@@ -250,11 +250,11 @@ class NodeCoordFileParser : public InstanceFileParser {
 
 		std::vector<std::vector<double>> cost_matrix = MakeCostMatrix(coords, dimension);
 		
-		delete coords;
+		delete[] coords;
 
 		std::string filename = path.substr(path.find_last_of("/\\") + 1);
 
-		return new TestInstance(new SparseGraph(cost_matrix),name, filename, -1);
+		return new TestInstance(new SparseGraph(cost_matrix),name, filename, optimal);
 	}
 
 	private:
@@ -267,8 +267,8 @@ class NodeCoordFileParser : public InstanceFileParser {
 
 			for (int i = 0;i < dimension;i++) {
 				for (int j = i;j < dimension;j++) {
-					cost_matrix[i][j] = cost_matrix[j][i] = round(sqrt((coords[i].first - coords[j].first) * (coords[i].first - coords[j].first) +
-						(coords[i].second - coords[j].second) * (coords[i].second - coords[j].second)));
+					cost_matrix[i][j] = cost_matrix[j][i] = std::sqrt((coords[i].first - coords[j].first) * (coords[i].first - coords[j].first) +
+						(coords[i].second - coords[j].second) * (coords[i].second - coords[j].second));
 				}
 			}
 

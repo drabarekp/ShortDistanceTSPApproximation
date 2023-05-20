@@ -8,13 +8,6 @@ bool lesserEdge(GraphEdge e1, GraphEdge e2) {
 	return e1.cost < e2.cost;
 }
 
-void GraphAlgorithm::findBottleneckSpanningTree(Graph& g) {
-
-}
-
-void GraphAlgorithm::recusivelyFindBottleneckSpanningTree(Graph& g) {
-
-}
 
 SparseGraph GraphAlgorithm::kruskalMinimalSpanningTree(SparseGraph& g){
 	UF unionFind(g.verticesCount());
@@ -38,34 +31,42 @@ SparseGraph GraphAlgorithm::kruskalMinimalSpanningTree(SparseGraph& g){
 	return SparseGraph(minimalSpanningTree);
 }
 
-std::vector<int> GraphAlgorithm::findBottleneckTSPApproximation(SparseGraph& tree) {
-	/*
-	auto visited = std::vector<bool>(tree.verticesCount());
-	auto cycle = std::vector<int>();
-	auto hamiltonCycle = recursiveBottleneckTSPApproximation(tree, 0, visited, cycle);*/
+std::vector<int> GraphAlgorithm::findBottleneckTSPApproximation(SparseGraph& network) {
 
-	auto hamiltonCycle = std::vector<int>();
-	for (int i = 0;i < tree.verticesCount();i++) {
-		hamiltonCycle.push_back(i);
+	auto tree = kruskalMinimalSpanningTree(network);
+	auto visited = std::vector<bool>(tree.verticesCount());
+
+	int initialVertex = 0;
+	for (int i = 0; i < tree.verticesCount(); i++) {
+		if (tree.getNeighbours(i).size() > 1) {
+			initialVertex = i;
+			break;
+		}
 	}
-	return hamiltonCycle;
+
+	auto x = recursiveBottleneckTSPApproximation(tree, initialVertex, visited);
+
+	std::vector<int> result(x.begin(), x.end());
+	return result;
 }
 
 TreeSize GraphAlgorithm::getTreeSize(SparseGraph& tree, int root, std::vector<bool>& visited) {
 	auto neighbours = tree.getNeighbours(root);
-	int numOfNeighbours = std::accumulate(neighbours.begin(), neighbours.end(), 0,
+	/*int numOfNeighbours = std::accumulate(neighbours.begin(), neighbours.end(), 0,
 		[&, visited](int sum, int second)
 		{
 			if (visited[second])
 				return sum;
 			return sum + 1;
-		});
+		});*/
+	std::vector<int> unvisitedNeighbours;
+	std::copy_if(neighbours.begin(), neighbours.end(), std::back_inserter(unvisitedNeighbours), [visited](int i) {return !visited[i]; });
 
-	if (numOfNeighbours == 0) {
+	if (unvisitedNeighbours.size() == 0) {
 		return one;
 	}
-	else if (numOfNeighbours == 1) {
-		auto childsNeighbours = tree.getNeighbours(neighbours[0]);
+	else if (unvisitedNeighbours.size() == 1) {
+		auto childsNeighbours = tree.getNeighbours(unvisitedNeighbours[0]);
 		int numOfChildsNeighboursExceptParent = std::accumulate(childsNeighbours.begin(), childsNeighbours.end(), 0,
 			[&, visited](int sum, int second)
 			{
@@ -87,30 +88,42 @@ TreeSize GraphAlgorithm::getTreeSize(SparseGraph& tree, int root, std::vector<bo
 	}
 }
 
-std::vector<int>& GraphAlgorithm::recursiveBottleneckTSPApproximation(SparseGraph& tree, int root, std::vector<bool>& visited, std::vector<int>& cycle) {
+std::list<int> GraphAlgorithm::recursiveBottleneckTSPApproximation(SparseGraph& tree, int root, std::vector<bool>& visited) {
 	auto treeSize = getTreeSize(tree, root, visited);
-	std::vector<int> resultPath;
+	visited[root] = true;
+	std::list<int> path;
 
 	if (treeSize == one) {
-		resultPath.push_back(root);
-		return resultPath;
+		path.push_back(root);
+		return path;
+		
 	}
 	else if (treeSize == two) {
-		resultPath.push_back(root);
+		path.push_back(root);
 		auto neighbours = tree.getNeighbours(root);
 		for (auto neighbour : neighbours) {
 			if (!visited[neighbour]) {
-				resultPath.push_back(neighbour);
-				break;
+				path.push_back(neighbour);
+				visited[neighbour] = true;
+				return path;
+			}
+		}
+	}
+	else if (treeSize == threeOrMore) {
+		/*cycle.push_back(root);*/
+		auto neighbours = tree.getNeighbours(root);
+		for (auto neighbour : neighbours) {
+			if (!visited[neighbour]) {
+				path.splice(path.end(), recursiveBottleneckTSPApproximation(tree, neighbour, visited));
 			}
 		}
 
-		return resultPath;
+		if (tree.getCost(root, path.front()) >= 0) {
+			path.push_back(root);
+		}
+		else {
+			path.push_front(root);
+		}
+		return path;
 	}
-	else if (treeSize == threeOrMore) {
-
-	}
-
-
-	visited[root] = true;
 }
