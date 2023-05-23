@@ -9,14 +9,19 @@ TestsRunner::TestsRunner(std::vector<TestInstance*> instances, GraphAlgorithm al
 }
 
 void TestsRunner::RunTests() {
+	
+	std::chrono::duration<double> elapsed(0);
 	for (auto instance : instances) {
+		auto start = std::chrono::high_resolution_clock::now();
 		auto result = algorithm.findBottleneckTSPApproximation(*(instance->graph));
+		auto end = std::chrono::high_resolution_clock::now();
+		elapsed += (end - start);
 
 		double weight = FindCycleWeight(result, instance);
 
 		std::cout << "Solution for file " << instance->filename << " is " << weight;
 		if (instance->optimalSolutionWeight != -1) {
-			std::cout << ", optimal is " << instance->optimalSolutionWeight << ", error is "<< 100*weight/ instance->optimalSolutionWeight << "%" << std::endl;
+			std::cout << ", optimal is " << instance->optimalSolutionWeight << ", error is " << 100 * (weight - instance->optimalSolutionWeight) / instance->optimalSolutionWeight << "%" << std::endl;
 		}
 		else {
 			std::cout << std::endl;
@@ -24,6 +29,11 @@ void TestsRunner::RunTests() {
 
 		SaveToFile(result, weight, instance);
 	}
+
+	std::cout << "Total time for algorithm execution: " << elapsed.count() << "s" << std::endl;
+
+	
+
 }
 
 double TestsRunner::FindCycleWeight(std::vector<int> cycle, TestInstance* instance)

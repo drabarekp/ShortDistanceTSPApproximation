@@ -26,6 +26,21 @@ public:
 	}
 
 protected:
+	bool CheckTriangleInequality(std::vector<std::vector<double>> cost_matrix) {
+		for (int i = 0;i < cost_matrix.size();i++) {
+			for (int j = 0;j < cost_matrix.size();j++) {
+				for (int k = 0;k < cost_matrix.size();k++) {
+					if (cost_matrix[i][j] + cost_matrix[j][k] < cost_matrix[i][k]) {
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
+protected:
 	std::string trimLine(std::string line) {
 
 		line.erase(0, line.find_first_not_of(' ')).erase(line.find_last_not_of(' ') + 1, line.length() - line.find_last_not_of(' '));
@@ -96,7 +111,13 @@ class MatrixFileParser : public InstanceFileParser {
 				return InstanceFileParser::ParseFile(path);
 		}
 
+		if (!CheckTriangleInequality(cost_matrix)){
+			std::cout<< "Triangle inequality not satisfied for file " << name << std::endl;
+			return InstanceFileParser::ParseFile(path);
+		}
+
 		std::string filename = path.substr(path.find_last_of("/\\") + 1);
+		std::cout << "Parsed file " << filename << std::endl;
 		
 		return new TestInstance(new SparseGraph(cost_matrix), name, filename, optimal);
 	}
@@ -168,7 +189,13 @@ class LowerDiagonalMatrixFileParser : public InstanceFileParser {
 			}
 		}
 
+		if (!CheckTriangleInequality(cost_matrix)) {
+			std::cout << "Triangle inequality not satisfied for file " << name << std::endl;
+			return InstanceFileParser::ParseFile(path);
+		}
+
 		std::string filename = path.substr(path.find_last_of("/\\") + 1);
+		std::cout << "Parsed file " << filename << std::endl;
 
 		return new TestInstance(new SparseGraph(cost_matrix), name, filename, optimal);
 	}
@@ -253,6 +280,8 @@ class NodeCoordFileParser : public InstanceFileParser {
 		delete[] coords;
 
 		std::string filename = path.substr(path.find_last_of("/\\") + 1);
+
+		std::cout << "Parsed file " << filename << std::endl;
 
 		return new TestInstance(new SparseGraph(cost_matrix),name, filename, optimal);
 	}
