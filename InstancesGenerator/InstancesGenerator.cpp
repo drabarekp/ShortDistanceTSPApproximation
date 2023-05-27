@@ -17,6 +17,14 @@ int main()
     std::cin >> numberOfInstances;
 
     generator->Generate(instancesSize, numberOfInstances);
+
+#ifdef _WIN32
+    system("pause");
+#endif
+
+#ifdef linux
+    system("read");
+#endif
 }
 
 

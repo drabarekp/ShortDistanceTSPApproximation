@@ -19,6 +19,14 @@ int main()
     runner.RunTests();
 
 
+    #ifdef _WIN32
+        system("pause");
+    #endif
+
+    #ifdef linux
+            system("read");
+    #endif
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
